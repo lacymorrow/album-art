@@ -1,4 +1,4 @@
-# album-art [![Build Status](https://travis-ci.org/sindresorhus/file-url.svg?branch=master)](https://travis-ci.org/sindresorhus/file-url)
+# album-art [![Build Status](https://travis-ci.org/lacymorrow/album-art.svg?branch=master)](https://travis-ci.org/lacymorrow/album-art)
 
 > Get an album or artist image url in node: "The Beatles" ➔ http://path/to/beatles.jpg
 
