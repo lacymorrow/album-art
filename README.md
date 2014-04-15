@@ -80,4 +80,5 @@ Example
 
 ## License
 
+This package uses the Last.fm API for it's data. You may consult the [Last.fm API Terms of Service](http://www.last.fm/api/tos) for license details. 
 [MIT](http://opensource.org/licenses/MIT) © [Lacy Morrow](http://lacymorrow.com)
