@@ -26,17 +26,25 @@ if (process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -
 	return;
 }
 
+var cb = function (err, url) {
+	if (err) {
+		console.error(err);
+		process.exit(1);
+	}
+	console.log(url);
+}
+
 var argc = process.argv.length;
 if (argc < 3){
 	help();
 } else if (argc === 3){
-	console.log(albumArt(artist, null, null));
+	albumArt(artist, null, null, cb);
 } else if (argc === 4 && sizes.indexOf(process.argv[3]) === -1){
-	console.log(albumArt(artist, process.argv[3], null));
+	albumArt(artist, process.argv[3], null, cb);
 } else if (argc === 4){
-	console.log(albumArt(artist, null, process.argv[3]));
+	albumArt(artist, null, process.argv[3], cb);
 } else if (sizes.indexOf(process.argv[4]) !== -1){
-	console.log(albumArt(artist, process.argv[3], process.argv[4]));
+	albumArt(artist, process.argv[3], process.argv[4], cb);
 } else {
-	console.log(albumArt(artist, process.argv[3], null));
+	albumArt(artist, process.argv[3], null, cb);
 }

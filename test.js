@@ -3,5 +3,7 @@ var assert = require('assert');
 var albumArt = require('./index');
 
 it('should return an image url', function () {
-	assert.strictEqual(albumArt('cher').indexOf('http'),0);
+	albumArt('cher', function (err, url) {
+	    assert.strictEqual(url.indexOf('http'), 0);
+	});
 });
