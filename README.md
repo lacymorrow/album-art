@@ -48,6 +48,7 @@ Album to search for.
 #### size
 
 Type: `string` 
+
 *possible values:* `small`, `medium`, `large`, `extralarge`, `mega`
 
 Size of image to return.
