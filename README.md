@@ -54,6 +54,7 @@ Type: `string`
 Size of image to return.
 
 #### callback(err, url)
+*Required*
 
 
 ## CLI
