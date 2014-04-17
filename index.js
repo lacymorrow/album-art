@@ -26,8 +26,6 @@ module.exports = function (artist, album, size, cb) {
 
 	var data = '';
 	http.get(options, function(resp){
-	  //console.log("statusCode: ", resp.statusCode);
-	  //console.log("headers: ", resp.headers);
 	  resp.on('data', function(chunk){
 	  	data += chunk;
 	  });

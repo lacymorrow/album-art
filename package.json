@@ -27,6 +27,8 @@
     "bin",
     "app",
     "album",
+    "art",
+    "image",
     "url",
     "uri",
     "path"
