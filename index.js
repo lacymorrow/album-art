@@ -48,6 +48,6 @@ module.exports = function (artist, album, size, cb) {
 	    }
 	  });
 	}).on("error", function(e){
-	    return cb('Got error: ' + json.message);
+	    return cb('Got error: ' + e.message);
 	});
 };
