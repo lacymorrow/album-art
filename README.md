@@ -18,7 +18,7 @@ var albumArt = require('album-art');
 
 albumArt('The Beatles', function (err, url) {
     console.log(url);
-    //=> 'http://path/to/beatles.jpg'
+    //=> http://path/to/beatles.jpg
 });
 
 albumArt('The Beatles', 'Abbey Road', 'large', function (err, url) {
@@ -71,7 +71,7 @@ $ npm install --global album-art
 $ album-art --help
 
 Usage
-  $ album-art [artist] [album] [small|medium|large|extralarge|mega]
+  $ album-art artist [album] [small|medium|large|extralarge|mega]
 
 Example
   $ album-art 'The Beatles' 'Abbey Road' large
