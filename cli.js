@@ -35,16 +35,22 @@ var cb = function (err, url) {
 }
 
 var argc = process.argv.length;
-if (argc < 3){
+if (argc < 3){ 
+	// Not enough args
 	help();
-} else if (argc === 3){
+} else if (argc === 3){ 
+	// Search atist
 	albumArt(artist, null, null, cb);
-} else if (argc === 4 && sizes.indexOf(process.argv[3]) === -1){
+} else if (argc === 4 && sizes.indexOf(process.argv[3]) === -1){ 
+	// Search artist and album
 	albumArt(artist, process.argv[3], null, cb);
-} else if (argc === 4){
+} else if (argc === 4 && sizes.indexOf(process.argv[3]) !== -1){ 
+	// Search artist and size
 	albumArt(artist, null, process.argv[3], cb);
-} else if (sizes.indexOf(process.argv[4]) !== -1){
+} else if (sizes.indexOf(process.argv[4]) !== -1){ 
+	// Search artist, album and size
 	albumArt(artist, process.argv[3], process.argv[4], cb);
-} else {
+} else { 
+	// Search artist and album
 	albumArt(artist, process.argv[3], null, cb);
 }
