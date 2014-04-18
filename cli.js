@@ -7,10 +7,8 @@ var sizes = ['small', 'medium', 'large', 'extralarge', 'mega'];
 
 function help() {
 	console.log(pkg.description);
-	console.log('');
-	console.log('Usage');
-	console.log('  $ album-art artist [album] [small|medium|large|extralarge|mega]');
-	console.log('');
+	console.log('\nUsage');
+	console.log('  $ album-art artist [album] [small|medium|large|extralarge|mega]\n');
 	console.log('Example');
 	console.log('  $ album-art \'The Beatles\' \'White Album\'');
 	console.log('  http://path/to/beatles/album.jpg');
