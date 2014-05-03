@@ -25,7 +25,6 @@ albumArt('The Beatles', 'Abbey Road', 'large', function (err, url) {
     console.log(url);
     //=> http://path/to/beatles/abbey_road_large.jpg
 });
-
 ```
 
 ## API
