@@ -1,6 +1,4 @@
 'use strict';
-var path = require('path');
-
 module.exports = function (artist, album, size, cb) {
 	if (typeof artist !== 'string') {
 		throw new Error('Expected a string');
