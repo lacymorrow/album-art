@@ -28,24 +28,22 @@ module.exports = function (artist, album, size, cb) {
 	  resp.on('end', function(){
 	    var json = JSON.parse(data);
 	    if (typeof(json.error) !== 'undefined'){
-	    	return cb('Got error: ' + json.message);
+	    	// Error
+	    	return cb('JSON Error: ' + json.message, '');
+	    } else if (sizes.indexOf(size) !== -1 && json[method] && json[method].image){
+	    	// Return image in specific size
+	    	json[method].image.forEach(function(e, i) {
+	    		if (e.size === size){
+	    			cb(null, e['#text']);
+	    		}
+	    	});
+	    } else if (json[method] && json[method].image) {
+	    	// Return largest image
+	    	var i = json[method].image.length - 1;
+	    	cb(null, json[method].image[i]['#text']);
 	    } else {
-		    if (sizes.indexOf(size) !== -1){
-		    	if (json[method] && json[method].image){
-			    	json[method].image.forEach(function(i) {
-			    		if (i.size === size){
-			    			cb(null, i['#text']);
-			    		}
-			    	});
-		    	}
-		    } else if (json[method] && json[method].image) {
-		    	// Return largest image
-		    	var i = json[method].image.length - 1;
-		    	cb(null, json[method].image[i]['#text']);
-		    } else {
-		    	// Not found image art.
-		    	cb(null, "");
-		    }
+	    	// No image art found
+	    	cb('Error: No image found.', '');
 	    }
 	  });
 	}).on("error", function(e){
