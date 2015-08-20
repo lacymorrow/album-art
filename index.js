@@ -31,15 +31,20 @@ module.exports = function (artist, album, size, cb) {
 	    	return cb('Got error: ' + json.message);
 	    } else {
 		    if (sizes.indexOf(size) !== -1){
-		    	json[method].image.forEach(function(i) {
-		    		if (i.size === size){
-		    			cb(null, i['#text']);
-		    		}
-		    	});
-		    } else {
+		    	if (json[method] && json[method].image){
+			    	json[method].image.forEach(function(i) {
+			    		if (i.size === size){
+			    			cb(null, i['#text']);
+			    		}
+			    	});
+		    	}
+		    } else if (json[method] && json[method].image) {
 		    	// Return largest image
 		    	var i = json[method].image.length - 1;
 		    	cb(null, json[method].image[i]['#text']);
+		    } else {
+		    	// Not found image art.
+		    	cb(null, "");
 		    }
 	    }
 	  });
