@@ -19,7 +19,7 @@ module.exports = function (artist, album, size, cb) {
 	var options = {
 	  host: 'ws.audioscrobbler.com',
 	  port: 80,
-	  path: encodeURI('/2.0/?format=json&api_key=' + apiKey + '&method=' + method + '.getinfo&artist=' + artist + '&album=' + album)
+	  path: '/2.0/?format=json&api_key=' + apiKey + '&method=' + method + '.getinfo&artist=' + encodeURIComponent(artist) + '&album=' + encodeURIComponent(album) + '&autoCorrect=true'
 	};
 	http.get(options, function(resp){
 	  resp.on('data', function(chunk){
