@@ -1,0 +1,33 @@
+{
+  "name": "album-art",
+  "description": "Get an album or artist image url in node: The Beatles ➔ http://path/to/beatles.jpg",
+  "main": "index.js",
+  "authors": [
+    "Lacy Morrow<me@lacymorrow.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "cli",
+    "bin",
+    "app",
+    "album",
+    "art",
+    "image",
+    "url",
+    "uri",
+    "path"
+  ],
+  "homepage": "https://github.com/lacymorrow/album-art",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
