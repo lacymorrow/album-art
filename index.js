@@ -16,6 +16,7 @@ module.exports = function (artist, album, size, cb) {
 	var method = (album === null) ? 'artist' : 'album';
 	var apiKey = '4cb074e4b8ec4ee9ad3eb37d6f7eb240';
 	var http = require('http');
+	var artist = artist.replace ("&", "and");
 	var options = {
 	  host: 'ws.audioscrobbler.com',
 	  port: 80,
@@ -39,7 +40,7 @@ module.exports = function (artist, album, size, cb) {
 	    	});
 	    } else if (json[method] && json[method].image) {
 	    	// Return largest image
-	    	var i = json[method].image.length - 1;
+	    	var i = json[method].image.length - 2;
 	    	cb(null, json[method].image[i]['#text']);
 	    } else {
 	    	// No image art found
