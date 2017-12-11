@@ -78,6 +78,13 @@ Example
 ```
 
 
+## Related
+
+* [movie-art](https://github.com/lacymorrow/movie-art)
+* [movie-info](https://github.com/lacymorrow/movie-info)
+* [movie-trailer](https://github.com/lacymorrow/movie-trailer)
+
+
 ## License
 
 This package uses the Last.fm API for it's data. You may consult the [Last.fm API Terms of Service](http://www.last.fm/api/tos) for license details. 
