@@ -1,6 +1,6 @@
 {
   "name": "album-art",
-  "description": "Get an album or artist image url in node: The Beatles ➔ http://path/to/beatles.jpg",
+  "description": "Fetch the cover art for an artist or album: The Beatles ➔ http://path/to/beatles.jpg",
   "main": "index.js",
   "authors": [
     "Lacy Morrow<me@lacymorrow.com>"
