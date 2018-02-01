@@ -1,4 +1,4 @@
-# album-art [![npm version](https://badge.fury.io/js/album-art.svg)](https://badge.fury.io/js/album-art) [![Build Status](https://travis-ci.org/lacymorrow/album-art.svg?branch=master)](https://travis-ci.org/lacymorrow/album-art) [![Maintainability](https://api.codeclimate.com/v1/badges/c3e8871f2b6009bd97e2/maintainability)](https://codeclimate.com/github/lacymorrow/album-art/maintainability)
+# album-art [![npm version](https://badge.fury.io/js/album-art.svg)](https://badge.fury.io/js/album-art) [![Build Status](https://travis-ci.org/lacymorrow/album-art.svg?branch=master)](https://travis-ci.org/lacymorrow/album-art) [![Maintainability](https://api.codeclimate.com/v1/badges/c3e8871f2b6009bd97e2/maintainability)](https://codeclimate.com/github/lacymorrow/album-art/maintainability) [![license:mit](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
 
 > Get an album or artist image url in node: "The Beatles" ➔ http://path/to/beatles.jpg
 
