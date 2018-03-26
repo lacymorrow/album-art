@@ -18,7 +18,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "ava"
   },
   "files": [
     "cli.js",
@@ -36,9 +36,10 @@
     "path"
   ],
   "devDependencies": {
-    "mocha": "*"
+    "ava": "^0.25.0"
   },
   "dependencies": {
-    "meow": "^4.0.0"
+    "meow": "^4.0.0",
+    "node-fetch": "^2.1.2"
   }
 }

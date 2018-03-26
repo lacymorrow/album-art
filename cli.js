@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 const meow = require( 'meow' )
-var albumArt = require('./index')
+var albumArt = require( './index' )
 var sizes = ['small', 'medium', 'large', 'extralarge', 'mega']
 
 const cli = meow( `
@@ -13,20 +13,20 @@ const cli = meow( `
 		--size,   -s  Possible values: [small|medium|large|extralarge|mega]
 
 	Example
-	  $ album-art 'The Beatles' 'White Album'
+	  $ album-art 'The Beatles' --album 'Abbey Road' --size 'large'
 	  // => http://path/to/beatles/album.jpg
 `, {
-	flags: {
-		album: {
-			type: 'string',
-			alias: 'a'
-		},
-		size: {
-			type: 'string',
-			alias: 's'
+		flags: {
+			album: {
+				type: 'string',
+				alias: 'a'
+			},
+			size: {
+				type: 'string',
+				alias: 's'
+			}
 		}
-	}
-} )
+	} )
 
 let opts = {
 	album: null,
@@ -38,11 +38,12 @@ if ( cli.flags.s ) opts.size = cli.flags.s
 if ( cli.input[1] ) opts.album = cli.input[1]
 if ( !cli.input[0] ) cli.showHelp()
 
-
 // albumArt( cli.input[0], opts ).then( console.log )
 
-var argc = process.argv.length;
+var argc = process.argv.length
 // Search artist, album and size
-albumArt(cli.input[0], opts.album, opts.size, function(err, res) {
-	console.log(res)
-});
+albumArt( cli.input[0], opts, function ( err, res ) {
+
+	console.log( res )
+
+} )
