@@ -5,6 +5,8 @@
 
 [![album-art](demo.svg)]()
 
+#### [Try it on RunKit](https://runkit.com/lacymorrow/album-art) _([Output](https://runkit.io/lacymorrow/album-art/branches/master?search=Rush))_
+
 
 ## Features
  * Use anywhere, browser or Node - UMD _([Browser Support](https://caniuse.com/#feat=fetch))_
@@ -12,8 +14,6 @@
  * Fetch images for albums or artists
  * Multiple size options
  * Uses Last.FM data
-
-#### [Try it on RunKit](https://runkit.com/lacymorrow/album-art) _([Output](https://runkit.io/lacymorrow/album-art/branches/master?search=Rush))_
 
 
 ## Install
