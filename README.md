@@ -107,7 +107,7 @@ $ npm install --global album-art
 $ album-art --help
 
 Usage
-  $ album-art artist [album] [small|medium|large|extralarge|mega]
+  $ album-art artist [album] [size]
 
 Example
   $ album-art 'The Beatles' --album 'Abbey Road' --size 'large'
