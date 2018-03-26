@@ -1,54 +1,48 @@
 #!/usr/bin/env node
-'use strict';
-var pkg = require('./package.json');
-var albumArt = require('./index');
-var artist = process.argv[2];
-var sizes = ['small', 'medium', 'large', 'extralarge', 'mega'];
+'use strict'
+const meow = require( 'meow' )
+var albumArt = require('./index')
+var sizes = ['small', 'medium', 'large', 'extralarge', 'mega']
 
-function help() {
-	console.log(pkg.description);
-	console.log('\nUsage');
-	console.log('  $ album-art artist [album] [small|medium|large|extralarge|mega]\n');
-	console.log('Example');
-	console.log('  $ album-art \'The Beatles\' \'White Album\'');
-	console.log('  http://path/to/beatles/album.jpg');
-}
+const cli = meow( `
+	Usage
+	  $ album-art artist [album] [size]
 
-if (process.argv.indexOf('-h') !== -1 || process.argv.indexOf('--help') !== -1) {
-	help();
-	return;
-}
+	Options
+		--album,  -a  Optionally search for a specific album art
+		--size,   -s  Possible values: [small|medium|large|extralarge|mega]
 
-if (process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -1) {
-	console.log(pkg.version);
-	return;
-}
-
-var cb = function (err, url) {
-	if (err) {
-		console.error(err);
-		process.exit(1);
+	Example
+	  $ album-art 'The Beatles' 'White Album'
+	  // => http://path/to/beatles/album.jpg
+`, {
+	flags: {
+		album: {
+			type: 'string',
+			alias: 'a'
+		},
+		size: {
+			type: 'string',
+			alias: 's'
+		}
 	}
-	console.log(url);
+} )
+
+let opts = {
+	album: null,
+	size: null
 }
+
+if ( cli.flags.a ) opts.album = cli.flags.a
+if ( cli.flags.s ) opts.size = cli.flags.s
+if ( cli.input[1] ) opts.album = cli.input[1]
+if ( !cli.input[0] ) cli.showHelp()
+
+
+// albumArt( cli.input[0], opts ).then( console.log )
 
 var argc = process.argv.length;
-if (argc < 3){ 
-	// Not enough args
-	help();
-} else if (argc === 3){ 
-	// Search atist
-	albumArt(artist, null, null, cb);
-} else if (argc === 4 && sizes.indexOf(process.argv[3]) === -1){ 
-	// Search artist and album
-	albumArt(artist, process.argv[3], null, cb);
-} else if (argc === 4 && sizes.indexOf(process.argv[3]) !== -1){ 
-	// Search artist and size
-	albumArt(artist, null, process.argv[3], cb);
-} else if (sizes.indexOf(process.argv[4]) !== -1){ 
-	// Search artist, album and size
-	albumArt(artist, process.argv[3], process.argv[4], cb);
-} else { 
-	// Search artist and album
-	albumArt(artist, process.argv[3], null, cb);
-}
+// Search artist, album and size
+albumArt(cli.input[0], opts.album, opts.size, function(err, res) {
+	console.log(res)
+});

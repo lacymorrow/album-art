@@ -3,6 +3,8 @@
   "version": "1.0.4",
   "description": "Fetch the cover art for an artist or album: The Beatles ➔ http://path/to/beatles.jpg",
   "license": "MIT",
+  "main": "index.js",
+  "browser": "index.js",
   "repository": "lacymorrow/album-art",
   "bin": {
     "album-art": "cli.js"
@@ -35,5 +37,8 @@
   ],
   "devDependencies": {
     "mocha": "*"
+  },
+  "dependencies": {
+    "meow": "^4.0.0"
   }
 }
