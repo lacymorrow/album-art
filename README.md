@@ -5,25 +5,6 @@
 
 [![album-art](demo.svg)]()
 
-#### [Try it on RunKit](https://runkit.com/lacymorrow/album-art) _([Output](https://runkit.io/lacymorrow/album-art/branches/master?search=Rush))_
-
-
-## Install
-
-Use with your favorite module loader or package manager. In the browser:
-
-```html
-<!-- albumArt window global -->
-<script type="text/javascript" src="https://unpkg.com/album-art"></script>
-```
-(via Unpkg, or via [JSDelivr](https://cdn.jsdelivr.net/npm/album-art/index.min.js"))
-
-Using [NPM](https://npmjs.com):
-
-```bash
-$ npm install -g album-art
-```
-
 
 ## Features
  * Use anywhere, browser or Node - UMD _([Browser Support](https://caniuse.com/#feat=fetch))_
@@ -32,12 +13,33 @@ $ npm install -g album-art
  * Multiple size options
  * Uses Last.FM data
 
+#### [Try it on RunKit](https://runkit.com/lacymorrow/album-art) _([Output](https://runkit.io/lacymorrow/album-art/branches/master?search=Rush))_
+
+
+## Install
+
+Using [NPM](https://npmjs.com):
+
+```bash
+$ npm install -g album-art
+```
+
+In the browser:
+
+```html
+<!-- albumArt window global -->
+<script type="text/javascript" src="https://unpkg.com/album-art"></script>
+```
+(via Unpkg, or via [JSDelivr](https://cdn.jsdelivr.net/npm/album-art/index.min.js"))
+
+
 
 ## Usage
 ```js
 const albumArt = require('album-art')
 
 albumArt( 'Rush' ).then( console.log )
+//=> http://path/to/rush.jpg
 ```
 
 ##### Callback
