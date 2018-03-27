@@ -1,6 +1,6 @@
 'use strict';
 
-( function ( root, cx ) {
+( ( root, cx ) => {
 
 	if ( typeof define === 'function' && define.amd ) {
 
@@ -19,9 +19,9 @@
 
 	}
 
-} )( this, function ( fetch ) {
+} )( this, fetch => {
 
-	function albumArt ( artist, options, cb ) {
+	const albumArt = ( artist, options, cb ) => {
 
 		// Massage inputs
 		if ( typeof artist !== 'string' ) {
@@ -90,7 +90,7 @@
 				if ( sizes.indexOf( opts.size ) !== -1 && json[method] && json[method].image ) {
 
 					// Return specific image size
-					json[method].image.forEach( function ( e, i ) {
+					json[method].image.forEach( ( e, i ) => {
 
 						if ( e.size === opts.size && e['#text'] ) {
 
