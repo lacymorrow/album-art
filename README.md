@@ -3,9 +3,9 @@
 
 > Fetch an album or artist image url: "The Beatles" ➔ http://path/to/beatles.jpg
 
-[![album-art](demo.svg)]()
+[![album-art](https://github.com/lacymorrow/album-art/raw/master/demo.svg?sanitize=truedemo.svg)]()
 
-#### [Try it on RunKit](https://runkit.com/lacymorrow/album-art) _([Output](https://runkit.io/lacymorrow/album-art/branches/master?search=Rush))_
+#### [Try it on RunKit](https://runkit.com/lacymorrow/album-art) _([Output](https://runkit.io/lacymorrow/album-art/branches/master?search=Ben+Folds&album=Songs+for+Silverman))_
 
 
 ## Features
@@ -30,13 +30,13 @@ In the browser:
 <!-- albumArt window global -->
 <script type="text/javascript" src="https://unpkg.com/album-art"></script>
 ```
-(via Unpkg, or via [JSDelivr](https://cdn.jsdelivr.net/npm/album-art/index.min.js"))
+(via Unpkg, or via [JSDelivr](https://cdn.jsdelivr.net/npm/album-art/index.min.js))
 
 
 
 ## Usage
 ```js
-const albumArt = require('album-art')
+const albumArt = require( 'album-art' )
 
 albumArt( 'Rush' ).then( console.log )
 //=> http://path/to/rush.jpg
