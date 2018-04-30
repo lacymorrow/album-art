@@ -1,6 +1,6 @@
 {
   "name": "album-art",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Fetch the cover art for an artist or album: The Beatles ➔ http://path/to/beatles.jpg",
   "license": "MIT",
   "main": "index.js",
