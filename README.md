@@ -1,5 +1,5 @@
 # album-art 
-[![npm version](https://badge.fury.io/js/album-art.svg)](https://badge.fury.io/js/album-art) [![Build Status](https://travis-ci.org/lacymorrow/album-art.svg?branch=master)](https://travis-ci.org/lacymorrow/album-art) [![Dependency Status](https://dependencyci.com/github/lacymorrow/album-art/badge)](https://dependencyci.com/github/lacymorrow/album-art) [![Maintainability](https://api.codeclimate.com/v1/badges/c3e8871f2b6009bd97e2/maintainability)](https://codeclimate.com/github/lacymorrow/album-art/maintainability) [![Try movie-art on RunKit](https://badge.runkitcdn.com/album-art.svg)](https://npm.runkit.com/album-art)
+[![npm version](https://badge.fury.io/js/album-art.svg)](https://badge.fury.io/js/album-art) [![Build Status](https://travis-ci.org/lacymorrow/album-art.svg?branch=master)](https://travis-ci.org/lacymorrow/album-art) [![Maintainability](https://api.codeclimate.com/v1/badges/c3e8871f2b6009bd97e2/maintainability)](https://codeclimate.com/github/lacymorrow/album-art/maintainability) [![Try movie-art on RunKit](https://badge.runkitcdn.com/album-art.svg)](https://npm.runkit.com/album-art)
 
 > Fetch an album or artist image url: "The Beatles" ➔ http://path/to/beatles.jpg
 
