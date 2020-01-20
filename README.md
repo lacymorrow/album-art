@@ -13,7 +13,7 @@
  * Promise and Callback API
  * Fetch images for albums or artists
  * Multiple size options
- * Uses Last.FM data
+ * Uses Spotify for image data
 
 
 ## Install
@@ -94,7 +94,7 @@ Album to search for.
 Type: `string` 
 
 Requested image size. 
-*possible values:* `small`, `medium`, `large`, `extralarge`, `mega`
+*possible values:* `small`, `medium`, `large`
 
 
 ## CLI Usage
@@ -124,6 +124,6 @@ Example
 
 ## License
 
-This package uses the Last.fm API for it's data. You may consult the [Last.fm API Terms of Service](http://www.last.fm/api/tos) for license details. 
+This package uses the ~Last.fm~ Spotify API for it's data. You may consult the [Spotify API Terms of Service](https://developer.spotify.com/terms/) for license details. 
 
 [MIT](http://opensource.org/licenses/MIT) © [Lacy Morrow](http://lacymorrow.com)

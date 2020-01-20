@@ -9,7 +9,7 @@ const cli = meow( `
 
 	Options
 		--album,  -a  Optionally search for a specific album art
-		--size,   -s  Possible values: [small|medium|large|extralarge|mega]
+		--size,   -s  Possible values: [small|medium|large]
 
 	Example
 	  $ album-art 'The Beatles' --album 'Abbey Road' --size 'large'

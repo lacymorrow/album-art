@@ -21,7 +21,7 @@
 
 } )( this, fetch => {
 
-	const albumArt = ( artist, options, cb ) => {
+	const albumArt = async ( artist, options, cb ) => {
 
 		// Massage inputs
 		if ( typeof artist !== 'string' ) {
@@ -46,65 +46,90 @@
 			size: null
 		}, options )
 
-		// Public Key on purpose
-		const apiKey = '4cb074e4b8ec4ee9ad3eb37d6f7eb240'
-		const sizes = ['small', 'medium', 'large', 'extralarge', 'mega']
+		// Image size options
+		const SIZES = {
+			SMALL: 'small',
+			MEDIUM: 'medium',
+			LARGE: 'large'
+		}
+
+		// Public Key on purpose - don't make me regret this
+		const apiEndpoint = 'https://api.spotify.com/v1'
+		const authEndpoint = 'https://accounts.spotify.com/api/token'
+		const clientId = '3f974573800a4ff5b325de9795b8e603'
+		const clientSecret = 'ff188d2860ff44baa57acc79c121a3b9'
+
+		// Create request URL
 		const method = ( opts.album === null ) ? 'artist' : 'album'
-		const url = 'https://ws.audioscrobbler.com' +
-			encodeURI( '/2.0/?format=json&api_key=' +
-				apiKey +
-				'&method=' + method +
-				'.getinfo&artist=' + artist +
-				( opts.album !== null ? '&album=' + opts.album : '' ) )
-		const response = fetch( url, {
-			method: 'GET'
+		const queryParams = `?q=${encodeURIComponent( artist )}${method === 'album' ? '%20' + opts.album : ''}&type=${method}&limit=1`
+		const searchUrl = `${apiEndpoint}/search${queryParams}`
+
+		// Start by authorizing a session
+		const authToken = await fetch( authEndpoint, {
+			method: 'post',
+			body: 'grant_type=client_credentials',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Authorization': 'Basic ' + Buffer.from( `${clientId}:${clientSecret}` ).toString( 'base64' )
+			}
 		} )
 			.then(
-				res => res.json(),
-				err => Promise.reject( err.message )
+				res => res.json()
 			)
-			.then( json => {
+			.then(
+				json => json.access_token
+			)
 
-				if ( typeof ( json.error ) !== 'undefined' ) {
+		// Perform image search
+		const response = await fetch( searchUrl, {
+			method: 'get',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Authorization': `Bearer ${authToken}`
+			}
+		} )
+			.then(
+				res => res.json()
+			)
+			.then(
+				json => {
 
-					// Error
-					return Promise.reject( new Error( `JSON - ${json.error} ${json.message}` ) )
+					if ( typeof ( json.error ) !== 'undefined' ) {
+
+						// Error
+						return Promise.reject( new Error( `JSON - ${json.error} ${json.message}` ) )
+
+					}
+
+					if ( !json[method + 's'] ) {
+
+						// Error
+						return Promise.reject( new Error( 'No results found' ) )
+
+					}
+
+					console.log(json[method + 's'].items[0].images[0].url)
+
+					// Select image size
+					const images = json[method + 's'].items[0].images
+
+					if ( opts.size === SIZES.SMALL ) {
+
+						return images[0].url
+
+					} else if ( opts.size === SIZES.MEDIUM && images.length > 1 ) {
+
+						return images[1].url
+
+					} else {
+
+						// Large by default
+						return images[images.length - 1].url
+
+					}
 
 				}
-
-				let output
-
-				if ( json[method] && json[method].image ) {
-
-					// Get largest image, 'mega'
-					const i = json[method].image.length - 2
-					output = json[method].image[i]['#text']
-
-				} else {
-
-					// No image art found
-					return Promise.reject( new Error( 'No results found' ) )
-
-				}
-
-				if ( sizes.indexOf( opts.size ) !== -1 && json[method] && json[method].image ) {
-
-					// Return specific image size
-					json[method].image.forEach( ( e, i ) => {
-
-						if ( e.size === opts.size && e['#text'] ) {
-
-							output = e['#text']
-
-						}
-
-					} )
-
-				}
-
-				return output || Promise.reject( new Error( 'No image found' ) )
-
-			} )
+			)
 			.catch( error => error )
 
 		// Callback
