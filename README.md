@@ -8,12 +8,15 @@
 #### [Try it on RunKit](https://runkit.com/lacymorrow/album-art) _([Output](https://runkit.io/lacymorrow/album-art/branches/master?search=Ben+Folds&album=Songs+for+Silverman))_
 
 
+###### NOTE: Last.fm [cannabilized their own API](https://getsatisfaction.com/lastfm/topics/api-announcement-dac8oefw5vrxq) and broke many applications, including this one. This library now uses Spotify for image data. The usage for `album-art` has changed slightly but is fully backwards-compatible. Please report any errors.
+
+
 ## Features
  * Use anywhere, browser or Node - UMD _([Browser Support](https://caniuse.com/#feat=fetch))_
  * Promise and Callback API
  * Fetch images for albums or artists
  * Multiple size options
- * Uses Last.FM data
+ * Uses Spotify for image data
 
 
 ## Install
@@ -94,7 +97,7 @@ Album to search for.
 Type: `string` 
 
 Requested image size. 
-*possible values:* `small`, `medium`, `large`, `extralarge`, `mega`
+*possible values:* `small`, `medium`, `large`
 
 
 ## CLI Usage
@@ -124,6 +127,6 @@ Example
 
 ## License
 
-This package uses the Last.fm API for it's data. You may consult the [Last.fm API Terms of Service](http://www.last.fm/api/tos) for license details. 
+This package uses the ~Last.fm~ Spotify API for it's data. You may consult the [Spotify API Terms of Service](https://developer.spotify.com/terms/) for license details. 
 
 [MIT](http://opensource.org/licenses/MIT) © [Lacy Morrow](http://lacymorrow.com)
