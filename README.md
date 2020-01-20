@@ -8,6 +8,9 @@
 #### [Try it on RunKit](https://runkit.com/lacymorrow/album-art) _([Output](https://runkit.io/lacymorrow/album-art/branches/master?search=Ben+Folds&album=Songs+for+Silverman))_
 
 
+###### NOTE: Last.fm [cannabilized their own API](https://getsatisfaction.com/lastfm/topics/api-announcement-dac8oefw5vrxq) and broke many applications, including this one. This library now uses Spotify for image data. The usage for `album-art` has changed slightly but is fully backwards-compatible. Please report any errors.
+
+
 ## Features
  * Use anywhere, browser or Node - UMD _([Browser Support](https://caniuse.com/#feat=fetch))_
  * Promise and Callback API
