@@ -5,12 +5,12 @@
 	if ( typeof define === 'function' && define.amd ) {
 
 		// AMD
-		define( ['fetch'], cx )
+		define( ['isomorphic-fetch'], cx )
 
 	} else if ( typeof exports === 'object' ) {
 
 		// Node, CommonJS-like
-		module.exports = cx( require( 'node-fetch' ) )
+		module.exports = cx( require( 'isomorphic-fetch' ) )
 
 	} else {
 
