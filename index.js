@@ -5,12 +5,12 @@
 	if ( typeof define === 'function' && define.amd ) {
 
 		// AMD
-		define( ['fetch'], cx )
+		define( ['isomorphic-fetch'], cx )
 
 	} else if ( typeof exports === 'object' ) {
 
 		// Node, CommonJS-like
-		module.exports = cx( require( 'node-fetch' ) )
+		module.exports = cx( require( 'isomorphic-fetch' ) )
 
 	} else {
 
@@ -26,7 +26,7 @@
 		// Massage inputs
 		if ( typeof artist !== 'string' ) {
 
-			throw new Error( 'Expected search query to be a string' )
+			throw new TypeError( 'Expected search query to be a string' )
 
 		}
 
@@ -37,7 +37,11 @@
 
 		}
 
-		if ( typeof cb !== 'function' ) cb = null
+		if ( typeof cb !== 'function' ) {
+
+			cb = null
+
+		}
 
 		// Default options
 		artist = artist.replace( '&', 'and' )
@@ -63,6 +67,22 @@
 		const method = ( opts.album === null ) ? 'artist' : 'album'
 		const queryParams = `?q=${encodeURIComponent( artist )}${method === 'album' ? '%20' + opts.album : ''}&type=${method}&limit=1`
 		const searchUrl = `${apiEndpoint}/search${queryParams}`
+		const authString = `${clientId}:${clientSecret}`
+
+		let authorization
+		if ( typeof btoa !== 'undefined' ) {
+
+			authorization = btoa( authString )
+
+		} else if ( Buffer ) {
+
+			authorization = Buffer.from( authString ).toString( 'base64' )
+
+		} else {
+
+			throw new Error( 'No suitable environment found' )
+
+		}
 
 		// Start by authorizing a session
 		const authToken = await fetch( authEndpoint, {
@@ -70,7 +90,7 @@
 			body: 'grant_type=client_credentials',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
-				'Authorization': 'Basic ' + Buffer.from( `${clientId}:${clientSecret}` ).toString( 'base64' )
+				Authorization: `Basic ${authorization}`
 			}
 		} )
 			.then(
@@ -81,11 +101,12 @@
 			)
 
 		// Perform image search
+		let error = null
 		const response = await fetch( searchUrl, {
 			method: 'get',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
-				'Authorization': `Bearer ${authToken}`
+				Authorization: `Bearer ${authToken}`
 			}
 		} )
 			.then(
@@ -101,41 +122,63 @@
 
 					}
 
-					if ( !json[method + 's'] ) {
+					if ( !json[method + 's'] || json[method + 's'].items.length === 0 ) {
 
 						// Error
 						return Promise.reject( new Error( 'No results found' ) )
 
 					}
 
-					console.log(json[method + 's'].items[0].images[0].url)
-
 					// Select image size
 					const images = json[method + 's'].items[0].images
 
-					if ( opts.size === SIZES.SMALL ) {
+					let smallest = images[0]
+					let largest = images[0]
 
-						return images[0].url
+					for ( const element of images ) {
 
-					} else if ( opts.size === SIZES.MEDIUM && images.length > 1 ) {
+						if ( parseInt( element.width ) < parseInt( smallest.width ) ) {
 
-						return images[1].url
+							smallest = element
 
-					} else {
+						}
 
-						// Large by default
-						return images[images.length - 1].url
+						if ( parseInt( element.width ) > parseInt( largest.width ) ) {
+
+							largest = element
+
+						}
 
 					}
 
+					if ( opts.size === SIZES.SMALL ) {
+
+						return smallest.url
+
+					}
+
+					if ( opts.size === SIZES.MEDIUM && images.length > 1 ) {
+
+						return images[1].url
+
+					}
+
+					// Large by default
+					return largest.url
+
 				}
 			)
-			.catch( error => error )
+			.catch( error_ => {
+
+				error = error_
+				return error_
+
+			} )
 
 		// Callback
 		if ( cb ) {
 
-			return response.then( res => cb( null, res ), err => cb( err, null ) )
+			return cb( error, response )
 
 		}
 
@@ -144,7 +187,7 @@
 
 	}
 
-	// exposed public method
+	// Exposed public method
 	return albumArt
 
 } )
