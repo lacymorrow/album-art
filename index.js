@@ -171,7 +171,6 @@
 			.catch( error_ => {
 
 				error = error_
-				return error_
 
 			} )
 
@@ -179,6 +178,13 @@
 		if ( cb ) {
 
 			return cb( error, response )
+
+		}
+
+		// Non-callback, throw errors
+		if ( error ) {
+
+			throw error
 
 		}
 

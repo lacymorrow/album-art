@@ -35,8 +35,15 @@ test( 'handles invalid query', async t => {
 
 	t.plan( 1 )
 
-	const response = await albumArt( 'zyxwvutsrq' )
-	t.is( response instanceof Error, true, 'response is an error' )
+	try {
+
+		await albumArt( 'zyxwvutsrq' )
+
+	} catch ( e ) {
+
+		t.is( e instanceof Error, true, 'response is an error' )
+
+	}
 
 } )
 
