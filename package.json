@@ -1,6 +1,6 @@
 {
   "name": "album-art",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "Fetch the cover art for an artist or album: The Beatles ➔ http://path/to/beatles.jpg",
   "repository": "lacymorrow/album-art",
   "license": "MIT",
@@ -11,12 +11,12 @@
   },
   "funding": [
     {
-      "type" : "patreon",
-      "url" : "https://patreon.com/lacymorrow"
+      "type": "patreon",
+      "url": "https://patreon.com/lacymorrow"
     },
     {
-      "type" : "individual",
-      "url" : "http://lacymorrow.com/donate"
+      "type": "individual",
+      "url": "http://lacymorrow.com/donate"
     },
     "https://www.buymeacoffee.com/lm"
   ],
@@ -51,6 +51,7 @@
     "np": "^7.6.2"
   },
   "dependencies": {
+    "eslint": "^8.28.0",
     "isomorphic-fetch": "^2.2.1",
     "meow": "^4.0.0"
   }

@@ -85,6 +85,7 @@
 		}
 
 		// Start by authorizing a session
+		let error = null
 		const authToken = await fetch( authEndpoint, {
 			method: 'post',
 			body: 'grant_type=client_credentials',
@@ -99,10 +100,16 @@
 			.then(
 				json => json.access_token
 			)
+			.catch(
+				err => {
+
+					error = err
+
+				}
+			)
 
 		// Perform image search
-		let error = null
-		const response = await fetch( searchUrl, {
+		const response = !error && await fetch( searchUrl, {
 			method: 'get',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -168,9 +175,9 @@
 
 				}
 			)
-			.catch( error_ => {
+			.catch( err => {
 
-				error = error_
+				error = err
 
 			} )
 

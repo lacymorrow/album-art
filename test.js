@@ -37,7 +37,23 @@ test( 'handles invalid query', async t => {
 
 	try {
 
-		await albumArt( 'zyxwvutsrq' )
+		console.log( await albumArt( 'asasdgsdgazsdgfzsdf' ) )
+
+	} catch ( e ) {
+
+		t.is( e instanceof Error, true, 'response is an error' )
+
+	}
+
+} )
+
+test( 'handles invalid query #2', async t => {
+
+	t.plan( 1 )
+
+	try {
+
+		console.log( await albumArt( '' ) )
 
 	} catch ( e ) {
 
