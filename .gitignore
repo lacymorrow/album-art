@@ -1,3 +1,6 @@
+.fuse*
+.DS*
+
 # Logs
 logs
 *.log
