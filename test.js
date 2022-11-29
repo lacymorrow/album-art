@@ -67,7 +67,7 @@ test( 'callback returns a url', async t => {
 
 	t.plan( 1 )
 
-	await albumArt( 'cher', ( res ) => {
+	await albumArt( 'cher', ( _err, res ) => {
 
 		t.is( res.indexOf( 'http' ), 0, 'response is a URL' )
 
