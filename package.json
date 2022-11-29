@@ -2,20 +2,31 @@
   "name": "album-art",
   "version": "2.0.2",
   "description": "Fetch the cover art for an artist or album: The Beatles ➔ http://path/to/beatles.jpg",
-  "license": "MIT",
-  "main": "index.js",
-  "browser": "index.js",
   "repository": "lacymorrow/album-art",
-  "bin": {
-    "album-art": "cli.js"
-  },
+  "license": "MIT",
   "author": {
     "name": "Lacy Morrow",
     "email": "me@lacymorrow.com",
     "url": "http://lacymorrow.com"
   },
+  "funding": [
+    {
+      "type" : "patreon",
+      "url" : "https://patreon.com/lacymorrow"
+    },
+    {
+      "type" : "individual",
+      "url" : "http://lacymorrow.com/donate"
+    },
+    "https://www.buymeacoffee.com/lm"
+  ],
+  "main": "index.js",
+  "browser": "index.js",
   "engines": {
     "node": ">=0.10.0"
+  },
+  "bin": {
+    "album-art": "cli.js"
   },
   "scripts": {
     "test": "ava"
@@ -36,7 +47,8 @@
     "path"
   ],
   "devDependencies": {
-    "ava": "^0.25.0"
+    "ava": "^0.25.0",
+    "np": "^7.6.2"
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
