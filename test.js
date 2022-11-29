@@ -1,6 +1,6 @@
 'use strict'
-import test from 'ava'
-import albumArt from '.'
+const test = require( 'ava' )
+const albumArt = require( './index' )
 
 test( 'returns a url', async t => {
 
@@ -63,15 +63,13 @@ test( 'handles invalid query #2', async t => {
 
 } )
 
-test.cb( 'callback returns a url', t => {
+test( 'callback returns a url', async t => {
 
 	t.plan( 1 )
 
-	albumArt( 'cher', ( err, res ) => {
+	await albumArt( 'cher', ( res ) => {
 
-		err && t.end( err )
 		t.is( res.indexOf( 'http' ), 0, 'response is a URL' )
-		t.end()
 
 	} )
 
