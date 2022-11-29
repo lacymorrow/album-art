@@ -47,12 +47,12 @@
     "path"
   ],
   "devDependencies": {
-    "ava": "^0.25.0",
+    "ava": "^5.1.0",
     "np": "^7.6.2"
   },
   "dependencies": {
     "eslint": "^8.28.0",
-    "isomorphic-fetch": "^2.2.1",
+    "isomorphic-fetch": "^3.0.0",
     "meow": "^4.0.0"
   }
 }
