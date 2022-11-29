@@ -29,6 +29,7 @@
     "album-art": "cli.js"
   },
   "scripts": {
+    "publish": "npx np",
     "test": "ava"
   },
   "files": [
