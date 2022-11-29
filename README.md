@@ -13,6 +13,7 @@
 
 ## Features
  * Use anywhere, browser or Node - UMD _([Browser Support](https://caniuse.com/#feat=fetch))_
+ * Works in React + NextJS client/server (uses [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch))
  * Promise and Callback API
  * Fetch images for albums or artists
  * Multiple size options
@@ -24,7 +25,7 @@
 Using [NPM](https://npmjs.com):
 
 ```bash
-$ npm install -g album-art
+$ npm install album-art
 ```
 
 In the browser:
