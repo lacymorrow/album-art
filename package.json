@@ -29,7 +29,6 @@
     "album-art": "cli.js"
   },
   "scripts": {
-    "publish": "npx np",
     "test": "ava"
   },
   "files": [
@@ -48,8 +47,7 @@
     "path"
   ],
   "devDependencies": {
-    "ava": "^5.1.0",
-    "np": "^7.6.2"
+    "ava": "^5.1.0"
   },
   "dependencies": {
     "eslint": "^8.28.0",
