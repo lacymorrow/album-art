@@ -41,13 +41,13 @@ In the browser:
 ```js
 const albumArt = require( 'album-art' )
 
-albumArt( 'Rush' ).then( console.log )
+await albumArt( 'Rush' ).then( console.log )
 //=> http://path/to/rush.jpg
 ```
 
 ##### Callback
 ```js
-albumArt( 'Rush', ( error, response ) => {
+await albumArt( 'Rush', ( error, response ) => {
    console.log( response )
 
    //=> http://path/to/rush.jpg
@@ -56,7 +56,7 @@ albumArt( 'Rush', ( error, response ) => {
 
 ##### Usage with album and size options
 ```js
-albumArt( 'Rush', {album: '2112', size: 'small'} )
+await albumArt( 'Rush', {album: '2112', size: 'small'} )
   .then( console.log )
 
 //=> http://path/to/rush_2112_small.jpg
