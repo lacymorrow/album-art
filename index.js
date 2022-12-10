@@ -65,7 +65,7 @@
 
 		// Create request URL
 		const method = ( opts.album === null ) ? 'artist' : 'album'
-		const queryParams = `?q=${encodeURIComponent( artist )}${method === 'album' ? '%20' + opts.album : ''}&type=${method}&limit=1`
+		const queryParams = `?q=${encodeURIComponent( artist )}${method === 'album' ? '%20' + encodeURIComponent( opts.album ) : ''}&type=${method}&limit=1`
 		const searchUrl = `${apiEndpoint}/search${queryParams}`
 		const authString = `${clientId}:${clientSecret}`
 
