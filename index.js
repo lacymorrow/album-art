@@ -44,7 +44,7 @@
 		}
 
 		// Default options
-		artist = artist.replace( '&', 'and' )
+		let query = artist.replace( '&', 'and' )
 		const opts = Object.assign( {
 			album: null,
 			size: null
@@ -63,9 +63,18 @@
 		const clientId = '3f974573800a4ff5b325de9795b8e603'
 		const clientSecret = 'ff188d2860ff44baa57acc79c121a3b9'
 
+		let method = 'artist'
+		if ( opts.album !== null ) {
+
+			method = 'album'
+			query += ` ${opts.album}` // add space + album name
+
+		}
+
+		// Create a query like "<artist> <album>" and escape it
+		const queryParams = `?q=${encodeURIComponent( query )}&type=${method}&limit=1`
+
 		// Create request URL
-		const method = ( opts.album === null ) ? 'artist' : 'album'
-		const queryParams = `?q=${encodeURIComponent( artist )}${method === 'album' ? '%20' + encodeURIComponent( opts.album ) : ''}&type=${method}&limit=1`
 		const searchUrl = `${apiEndpoint}/search${queryParams}`
 		const authString = `${clientId}:${clientSecret}`
 
