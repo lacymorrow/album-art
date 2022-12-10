@@ -75,3 +75,12 @@ test( 'callback returns a url', async t => {
 
 } )
 
+test( 'can handle special characters in album name', async t => {
+
+	t.plan( 1 )
+
+	const response = await albumArt( 'kaytranada', {album: '99.9%'} )
+	t.is( response.indexOf( 'http' ), 0, 'response is a URL' )
+
+} )
+
