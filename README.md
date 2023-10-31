@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> This library is considered **feature-complete** and will only receive updates for bug fixes. You may still create an issue if you have a feature request.
+
 # album-art [<img src="https://github.com/lacymorrow/crossover/raw/master/src/static/meta/patreon-button.webp" style="height:40px;" height="40" align="right" />](https://www.patreon.com/bePatron?u=55065733)
 
 <div style="display: flex; flex-direction: row;"> 
