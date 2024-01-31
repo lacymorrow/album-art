@@ -54,7 +54,6 @@
   },
   "dependencies": {
     "cross-fetch": "^4.0.0",
-    "isomorphic-fetch": "^3.0.0",
     "meow": "^4.0.0"
   }
 }
