@@ -39,15 +39,19 @@
     "index.js"
   ],
   "keywords": [
-    "cli",
-    "bin",
-    "app",
     "album",
+    "album-art",
+    "album-cover",
     "art",
+    "artist",
+    "cover",
+    "cover-art",
     "image",
+    "music",
+    "spotify",
     "url",
-    "uri",
-    "path"
+    "cli",
+    "bin"
   ],
   "devDependencies": {
     "ava": "^5.3.1",
