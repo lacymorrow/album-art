@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
+  <title>album-art</title>
+  <!-- Rounded square — amber/gold (vinyl gold aesthetic) -->
+  <rect x="16" y="16" width="224" height="224" rx="48" fill="#f59e0b"/>
+  <!-- Eighth note: head + stem + flag -->
+  <g fill="#ffffff">
+    <!-- Note head (rotated ellipse) -->
+    <ellipse cx="98" cy="170" rx="28" ry="20" transform="rotate(-20 98 170)"/>
+    <!-- Stem -->
+    <rect x="120" y="70" width="10" height="106"/>
+    <!-- Flag (curved swoosh) -->
+    <path d="M120 70 Q170 80 170 130 Q160 110 130 110 Z"/>
+  </g>
+</svg>

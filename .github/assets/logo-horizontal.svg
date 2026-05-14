@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 688 200" fill="none">
+  <title>album-art</title>
+  <!-- Mark -->
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="160" height="160" rx="34" fill="#f59e0b"/>
+    <g fill="#ffffff" transform="translate(0, 0) scale(0.625)">
+      <ellipse cx="98" cy="170" rx="28" ry="20" transform="rotate(-20 98 170)"/>
+      <rect x="120" y="70" width="10" height="106"/>
+      <path d="M120 70 Q170 80 170 130 Q160 110 130 110 Z"/>
+    </g>
+  </g>
+  <!-- Wordmark -->
+  <text
+    x="210"
+    y="132"
+    font-family="ui-sans-serif, system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif"
+    font-size="120"
+    font-weight="800"
+    letter-spacing="-6"
+    fill="#1a0b1f"
+  >album-art</text>
+</svg>

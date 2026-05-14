@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  smoke:
+    name: Smoke (Node ${{ matrix.node }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        node: ["18", "20", "22"]
+        include:
+          - os: macos-latest
+            node: "20"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: npm install
+
+      # The full test suite calls Spotify's public API and is occasionally
+      # flaky depending on what Spotify returns. CI verifies that the module
+      # loads and the CLI bin is exported correctly.
+      - name: Module loads
+        run: node -e "const a = require('./'); if (typeof a !== 'function') process.exit(1)"
+
+      - name: CLI entry is executable
+        run: node -e "require('fs').accessSync('./cli.js')"
