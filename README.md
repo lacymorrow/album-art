@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/lacymorrow/album-art">
-    <img src=".github/assets/logo-horizontal.svg" alt="album-art" width="320">
+    <img src="https://raw.githubusercontent.com/lacymorrow/album-art/master/.github/assets/logo-horizontal.svg" alt="album-art" width="320">
   </a>
 
   <p><strong>Fetch album or artist cover art</strong> ➔ "The Beatles" → http://path/to/beatles.jpg</p>
@@ -27,7 +27,7 @@
 ## Features
 
 - Use anywhere, browser or Node (UMD bundle — [browser support](https://caniuse.com/#feat=fetch))
-- Works in React + Next.js, client and server, via [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch)
+- Works in React + Next.js, client and server, via [cross-fetch](https://www.npmjs.com/package/cross-fetch)
 - Promise **and** callback API
 - Fetch images for albums or artists
 - Multiple size options (`small` · `medium` · `large`)
@@ -53,7 +53,7 @@ Also available via [JSDelivr](https://cdn.jsdelivr.net/npm/album-art/index.min.j
 ```js
 const albumArt = require("album-art");
 
-await albumArt("Rush").then(console.log);
+albumArt("Rush").then(console.log);
 //=> http://path/to/rush.jpg
 ```
 
@@ -69,7 +69,7 @@ albumArt("Rush", (error, response) => {
 ### With album and size options
 
 ```js
-await albumArt("Rush", { album: "2112", size: "small" }).then(console.log);
+albumArt("Rush", { album: "2112", size: "small" }).then(console.log);
 //=> http://path/to/rush_2112_small.jpg
 ```
 
