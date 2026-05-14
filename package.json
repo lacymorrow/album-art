@@ -32,6 +32,8 @@
     "release": "np",
     "test": "ava"
   },
+  "homepage": "https://github.com/lacymorrow/album-art#readme",
+  "bugs": "https://github.com/lacymorrow/album-art/issues",
   "files": [
     "cli.js",
     "index.js"

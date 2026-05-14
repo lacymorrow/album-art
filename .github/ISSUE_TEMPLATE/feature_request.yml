@@ -1,0 +1,20 @@
+name: Feature request
+description: Suggest an enhancement (the library is feature-complete, but bug-adjacent ergonomics are welcome)
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Heads up — `album-art` is intentionally feature-complete. Suggestions that improve ergonomics or fix surprising edges are very welcome; new providers or major API changes are probably out of scope.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Your proposed change

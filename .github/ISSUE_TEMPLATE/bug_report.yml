@@ -1,0 +1,44 @@
+name: Bug report
+description: album-art returned the wrong image, an error, or nothing
+labels: ["bug"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: album-art version
+      placeholder: "4.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: artist
+    attributes:
+      label: Artist (and album, if applicable) you queried
+      placeholder: "Rush — 2112"
+    validations:
+      required: true
+
+  - type: input
+    id: env
+    attributes:
+      label: Where you ran it
+      description: Node version, browser, framework (React, Next.js…)
+      placeholder: "Node 20, Next.js 14 server"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened?
+      description: Full error message / response, please.
+      render: shell
+    validations:
+      required: true
