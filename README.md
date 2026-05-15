@@ -1,6 +1,9 @@
 <div align="center">
   <a href="https://github.com/lacymorrow/album-art">
-    <img src="https://raw.githubusercontent.com/lacymorrow/album-art/master/.github/assets/logo-horizontal.svg" alt="album-art" width="320">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lacymorrow/album-art/master/.github/assets/logo-horizontal-dark.svg">
+      <img src="https://raw.githubusercontent.com/lacymorrow/album-art/master/.github/assets/logo-horizontal.svg" alt="album-art" width="320">
+    </picture>
   </a>
 
   <p><strong>Fetch album or artist cover art</strong> ➔ "The Beatles" → http://path/to/beatles.jpg</p>
