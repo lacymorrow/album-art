@@ -60,6 +60,6 @@
   },
   "dependencies": {
     "cross-fetch": "^4.0.0",
-    "meow": "^4.0.0"
+    "meow": "^14.1.0"
   }
 }
