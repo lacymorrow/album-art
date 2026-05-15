@@ -1,4 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 200" fill="none">
+  <defs>
+    <filter id="glow" x="-10%" y="-50%" width="120%" height="200%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="2.5"/>
+      <feGaussianBlur stdDeviation="4"/>
+      <feComponentTransfer><feFuncA type="linear" slope="2.4"/></feComponentTransfer>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0"/>
+      <feComposite in2="SourceGraphic" operator="out" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
   <title>album-art</title>
   <!-- Mark -->
   <g transform="translate(20, 20)">
