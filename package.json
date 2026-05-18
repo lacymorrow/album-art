@@ -56,7 +56,7 @@
   "devDependencies": {
     "ava": "^8.0.0",
     "eslint": "^8.52.0",
-    "np": "^8.0.4"
+    "np": "^11.2.1"
   },
   "dependencies": {
     "cross-fetch": "^4.0.0",
