@@ -44,7 +44,7 @@
 		}
 
 		// Default options
-		let query = artist.replace( '&', ';' )
+		let query
 		const opts = Object.assign( {
 			album: null,
 			size: null
@@ -63,11 +63,10 @@
 		const clientId = '3f974573800a4ff5b325de9795b8e603'
 		const clientSecret = 'ff188d2860ff44baa57acc79c121a3b9'
 
-		// Use only primary artist for better matching
+		// Use only primary artist for better matching; split on &/;/, strips any & before it reaches the query
 		const primaryArtist = artist.split( /[;,&]/ )[0].trim()
-		let primaryQuery = primaryArtist.replace( '&', ';' )
 
-		let method = 'album'
+		let method = 'artist'
 		let fallbackQuery = null
 
 		if ( opts.album !== null ) {
@@ -78,18 +77,18 @@
 			// If artist and album are the same word, don't repeat it
 			if ( primaryArtist.toLowerCase() === opts.album.toLowerCase() ) {
 
-				query = `artist:${primaryQuery}`
+				query = `artist:${primaryArtist}`
 
 			} else {
 
-				query = `artist:${primaryQuery} album:${opts.album}`
+				query = `artist:${primaryArtist} album:${opts.album}`
 
 			}
 
 		} else {
 
 			fallbackQuery = primaryArtist
-			query = `artist:${primaryQuery}`
+			query = `artist:${primaryArtist}`
 
 		}
 
@@ -115,15 +114,31 @@
 
 		}
 
-		// Helper to extract image url from items based on size
+		// Helper to extract image url from items based on size.
+		// Tries an exact (case-insensitive) name match first; falls back to items[0].
+		// Artist search results use item.name; album search results use item.artists[].name.
 		const extractImage = ( items ) => {
 
-			// Find best match where artist name matches exactly
-			const match = items.find( item =>
-				item.artists.some( a => a.name.toLowerCase() === primaryArtist.toLowerCase() )
-			) || items[0]
+			let match
 
-			const images = match.images
+			if ( method === 'artist' ) {
+
+				// Artist results: match against item.name directly
+				match = items.find( item =>
+					item.name.toLowerCase() === primaryArtist.toLowerCase()
+				) || items[0]
+
+			} else {
+
+				// Album results: match against the artists array
+				match = items.find( item =>
+					item.artists.some( a => a.name.toLowerCase() === primaryArtist.toLowerCase() )
+				) || items[0]
+
+			}
+
+			const images = ( match && match.images ) || []
+			if ( images.length === 0 ) return null
 
 			let smallest = images[0]
 			let largest = images[0]
