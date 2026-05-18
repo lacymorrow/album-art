@@ -55,7 +55,7 @@
   ],
   "devDependencies": {
     "ava": "^8.0.0",
-    "eslint": "^8.52.0",
+    "eslint": "^10.4.0",
     "np": "^11.2.1"
   },
   "dependencies": {
