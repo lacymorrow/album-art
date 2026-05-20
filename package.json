@@ -1,6 +1,6 @@
 {
   "name": "album-art",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Fetch the cover art for an artist or album: The Beatles ➔ http://path/to/beatles.jpg",
   "repository": "lacymorrow/album-art",
   "license": "MIT",
