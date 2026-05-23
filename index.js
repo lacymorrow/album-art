@@ -44,7 +44,7 @@
 		}
 
 		// Default options
-		let query = artist.replace( '&', 'and' )
+		let query
 		const opts = Object.assign( {
 			album: null,
 			size: null
@@ -63,16 +63,37 @@
 		const clientId = '3f974573800a4ff5b325de9795b8e603'
 		const clientSecret = 'ff188d2860ff44baa57acc79c121a3b9'
 
+		// Use only primary artist for better matching; split on &/;/, strips any & before it reaches the query
+		const primaryArtist = artist.split( /[;,&]/ )[0].trim()
+
 		let method = 'artist'
+		let fallbackQuery = null
+
 		if ( opts.album !== null ) {
 
 			method = 'album'
-			query += ` ${opts.album}` // add space + album name
+			fallbackQuery = `${primaryArtist} ${opts.album}`
+
+			// If artist and album are the same word, don't repeat it
+			if ( primaryArtist.toLowerCase() === opts.album.toLowerCase() ) {
+
+				query = `artist:${primaryArtist}`
+
+			} else {
+
+				query = `artist:${primaryArtist} album:${opts.album}`
+
+			}
+
+		} else {
+
+			fallbackQuery = primaryArtist
+			query = `artist:${primaryArtist}`
 
 		}
 
-		// Create a query like "<artist> <album>" and escape it
-		const queryParams = `?q=${encodeURIComponent( query )}&type=${method}&limit=1`
+		// Bump limit to 10 so we can find best artist match
+		const queryParams = `?q=${encodeURIComponent( query )}&type=${method}&limit=10`
 
 		// Create request URL
 		const searchUrl = `${apiEndpoint}/search${queryParams}`
@@ -90,6 +111,67 @@
 		} else {
 
 			throw new Error( 'No suitable environment found' )
+
+		}
+
+		// Helper to extract image url from items based on size.
+		// Tries an exact (case-insensitive) name match first; falls back to items[0].
+		// Artist search results use item.name; album search results use item.artists[].name.
+		const extractImage = ( items ) => {
+
+			let match
+
+			if ( method === 'artist' ) {
+
+				// Artist results: match against item.name directly
+				match = items.find( item =>
+					item.name.toLowerCase() === primaryArtist.toLowerCase()
+				) || items[0]
+
+			} else {
+
+				// Album results: match against the artists array
+				match = items.find( item =>
+					item.artists.some( a => a.name.toLowerCase() === primaryArtist.toLowerCase() )
+				) || items[0]
+
+			}
+
+			const images = ( match && match.images ) || []
+			if ( images.length === 0 ) return null
+
+			let smallest = images[0]
+			let largest = images[0]
+
+			for ( const element of images ) {
+
+				if ( parseInt( element.width ) < parseInt( smallest.width ) ) {
+
+					smallest = element
+
+				}
+
+				if ( parseInt( element.width ) > parseInt( largest.width ) ) {
+
+					largest = element
+
+				}
+
+			}
+
+			if ( opts.size === SIZES.SMALL ) {
+
+				return smallest.url
+
+			}
+
+			if ( opts.size === SIZES.MEDIUM && images.length > 1 ) {
+
+				return images[1].url
+
+			}
+
+			return largest.url
 
 		}
 
@@ -133,54 +215,39 @@
 
 					if ( typeof ( json.error ) !== 'undefined' ) {
 
-						// Error
 						return Promise.reject( new Error( `JSON - ${json.error} ${json.message}` ) )
 
 					}
 
 					if ( !json[method + 's'] || json[method + 's'].items.length === 0 ) {
 
-						// Error
-						return Promise.reject( new Error( 'No results found' ) )
+						// Retry with loose fallback query
+						const fallbackParams = `?q=${encodeURIComponent( fallbackQuery )}&type=${method}&limit=10`
+						const fallbackUrl = `${apiEndpoint}/search${fallbackParams}`
+
+						return fetch( fallbackUrl, {
+							method: 'get',
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded',
+								Authorization: `Bearer ${authToken}`
+							}
+						} )
+							.then( res => res.json() )
+							.then( json => {
+
+								if ( !json[method + 's'] || json[method + 's'].items.length === 0 ) {
+
+									return Promise.reject( new Error( 'No results found' ) )
+
+								}
+
+								return extractImage( json[method + 's'].items )
+
+							} )
 
 					}
 
-					// Select image size
-					const images = json[method + 's'].items[0].images
-
-					let smallest = images[0]
-					let largest = images[0]
-
-					for ( const element of images ) {
-
-						if ( parseInt( element.width ) < parseInt( smallest.width ) ) {
-
-							smallest = element
-
-						}
-
-						if ( parseInt( element.width ) > parseInt( largest.width ) ) {
-
-							largest = element
-
-						}
-
-					}
-
-					if ( opts.size === SIZES.SMALL ) {
-
-						return smallest.url
-
-					}
-
-					if ( opts.size === SIZES.MEDIUM && images.length > 1 ) {
-
-						return images[1].url
-
-					}
-
-					// Large by default
-					return largest.url
+					return extractImage( json[method + 's'].items )
 
 				}
 			)
