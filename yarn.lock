@@ -2193,9 +2193,9 @@ normalize-package-data@^8.0.0:
     validate-npm-package-license "^3.0.4"
 
 np@^12.0.0:
-  version "12.0.1"
-  resolved "https://registry.yarnpkg.com/np/-/np-12.0.1.tgz#7de1c73cfe49044e8f95889630ad3206a97b1997"
-  integrity sha512-BRT4/T8hOfY0+0ZlXC2JO+gPjPYoo9mQVw4D51+L6Aq3PX3aHwgD5lfNpbAUBHa3fZUbkhAUR3RlS00cLubRTw==
+  version "12.1.0"
+  resolved "https://registry.yarnpkg.com/np/-/np-12.1.0.tgz#7cf5cf4362b622cb5739affdfb2f9092f30b5acc"
+  integrity sha512-k5Od/VBCjDRHe31RufFw2V3zSCWJs43Lc5KgUPxN8qC0Og+lZP5AUfTNAsUnaICCcwMM3RyF5L5DK1p0L8GWcg==
   dependencies:
     chalk "^5.6.2"
     chalk-template "^1.1.2"
@@ -2203,7 +2203,6 @@ np@^12.0.0:
     cosmiconfig "^9.0.1"
     del "^8.0.1"
     escape-goat "^4.0.0"
-    escape-string-regexp "^5.0.0"
     execa "^9.6.1"
     exit-hook "^5.1.0"
     github-url-from-git "^1.5.0"
