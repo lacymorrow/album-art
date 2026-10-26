@@ -601,9 +601,9 @@ atomically@^2.0.3:
     when-exit "^2.1.4"
 
 ava@^8.0.0:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/ava/-/ava-8.0.2.tgz#9519e028b9ca2ed2f540e9614f0c850c706a81b1"
-  integrity sha512-mTqZqikubkGBorVk2HKiw63ruEhpgYLnj/OcTlopFinYRPKlBQc1rBnOGSOZtBzgCuHpF2zqiKw2MGI0/klW9Q==
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/ava/-/ava-8.1.1.tgz#53fea8f2363751977b9c0f6f1fe153718e93bdf0"
+  integrity sha512-qkXhR6mHjNVTbpf7mqwCdBuM8kgbY5xQKjxnOCTsSkJXTFUn1GEMO/QEZwVCxyUcdPOSUDx5GBbtqzHdhItaZA==
   dependencies:
     "@vercel/nft" "^1.11.0"
     acorn "^8.19.0"
@@ -623,7 +623,7 @@ ava@^8.0.0:
     concordance "^5.0.4"
     currently-unhandled "^0.4.1"
     debug "^4.4.3"
-    emittery "^2.1.0"
+    emittery "^2.2.0"
     figures "^6.1.0"
     globby "^16.2.4"
     ignore-by-default "^2.1.0"
@@ -637,7 +637,7 @@ ava@^8.0.0:
     package-config "^5.0.0"
     picomatch "^4.0.7"
     plur "^6.0.0"
-    pretty-ms "^9.3.1"
+    pretty-ms "^10.0.0"
     resolve-cwd "^3.0.0"
     slash "^5.1.0"
     stack-utils "^2.0.6"
@@ -1084,10 +1084,10 @@ elegant-spinner@^1.0.1:
   resolved "https://registry.yarnpkg.com/elegant-spinner/-/elegant-spinner-1.0.1.tgz#db043521c95d7e303fd8f345bedc3349cfb0729e"
   integrity sha512-B+ZM+RXvRqQaAmkMlO/oSe5nMUOaUnyfGYCEHoR8wrXsZR2mA0XVibsxV1bvTwxdRWah1PkQqso2EzhILGHtEQ==
 
-emittery@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/emittery/-/emittery-2.1.0.tgz#8ee9a35fb2c92127f1fe453b0e476b261c9dc119"
-  integrity sha512-cPP/ddRdWhEQz7+R/QJi22O2iA73YuNWJRgDM2SUVEKA3XRPiv9f5cfGb508s+124sEBlnewHq/CiSOuIyewHg==
+emittery@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/emittery/-/emittery-2.2.0.tgz#d7d4133ca100f5d6927a9787bcb9456448048e06"
+  integrity sha512-zpmLSuVIqrtTPDR2IYiTbxXB6XgrS7+rRk5uT4w6qgmxeNvtdnSaAOGNNbVokgm+0F6zrRufshUfSlnsPc7d8g==
 
 emoji-regex@^10.3.0:
   version "10.6.0"
@@ -1167,9 +1167,9 @@ eslint-visitor-keys@^5.0.1:
   integrity sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA==
 
 eslint@^10.4.0:
-  version "10.12.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-10.12.0.tgz#4f2f7e679bdce9d71438c2900f2c8d4d297332b0"
-  integrity sha512-npHjrHb2o4ehH3mE+YuxABR+0gyb0aVWCIolgJDArwCiHEIsonBm3ZKjel5b0U5+a+MbEvIyRCGCzD3eKKK2NA==
+  version "10.13.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-10.13.0.tgz#a8a4742648c0fa9131f429b509de5407682d4864"
+  integrity sha512-UohDjD4zSzEwhf58M3O7vc/ycc8O1I7dNlhtD0WxE8Px8EHNJKtUwzBqrzeGhisRuv2ag4sAYswszCJRgKXYUg==
   dependencies:
     "@eslint-community/eslint-utils" "^4.8.0"
     "@eslint-community/regexpp" "^4.12.2"
@@ -2581,7 +2581,12 @@ presentable-error@^0.0.1:
   resolved "https://registry.yarnpkg.com/presentable-error/-/presentable-error-0.0.1.tgz#6d2579d397b1384a0cc733b36375c2c8755d53c6"
   integrity sha512-E6rsNU1QNJgB3sjj7OANinGncFKuK+164sLXw1/CqBjj/EkXSoSdHCtWQGBNlREIGLnL7IEUEGa08YFVUbrhVg==
 
-pretty-ms@^9.2.0, pretty-ms@^9.3.1:
+pretty-ms@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-10.0.0.tgz#3a223bfea7625711955557f1a58389b80d9ed00c"
+  integrity sha512-6BWuxY2dCNgT45VnGzZcfNy7WeLqXiZqhhy4aHThTE6KI56R2ZBw9HQ7spPFKYchDizvJbPxTEknIpmW4FSmQA==
+
+pretty-ms@^9.2.0:
   version "9.3.1"
   resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-9.3.1.tgz#7b58d8fbf376f01602ff05230358e8fa5e0f072b"
   integrity sha512-HzMy3Geq23nVALD/M2LliU+F+M+gVNsvkQWWqeBZ8HDiCgzo6YPJ/Omrmtq24EFrIsk0a3EkQGEd7bDOo+IhGA==
