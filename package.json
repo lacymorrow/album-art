@@ -26,10 +26,10 @@
   "main": "index.js",
   "browser": "index.js",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=20"
   },
   "bin": {
-    "album-art": "cli.js"
+    "album-art": "cli.mjs"
   },
   "scripts": {
     "release": "np",
@@ -38,7 +38,7 @@
   "homepage": "https://github.com/lacymorrow/album-art#readme",
   "bugs": "https://github.com/lacymorrow/album-art/issues",
   "files": [
-    "cli.js",
+    "cli.mjs",
     "index.js"
   ],
   "keywords": [

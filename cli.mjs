@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-'use strict'
-const meow = require( 'meow' )
-const albumArt = require( '.' )
+import meow from 'meow'
+import albumArt from './index.js'
 
 const cli = meow( `
 	Usage
@@ -15,40 +14,18 @@ const cli = meow( `
 	  $ album-art 'The Beatles' --album 'Abbey Road' --size 'large'
 	  // => http://path/to/beatles/album.jpg
 `, {
+	importMeta: import.meta,
 	flags: {
 		album: {
 			type: 'string',
-			alias: 'a'
+			shortFlag: 'a'
 		},
 		size: {
 			type: 'string',
-			alias: 's'
+			shortFlag: 's'
 		}
 	}
 } )
-
-const opts = {
-	album: null,
-	size: null
-}
-
-if ( cli.flags.a ) {
-
-	opts.album = cli.flags.a
-
-}
-
-if ( cli.flags.s ) {
-
-	opts.size = cli.flags.s
-
-}
-
-if ( cli.input[1] ) {
-
-	opts.album = cli.input[1]
-
-}
 
 if ( !cli.input[0] ) {
 
@@ -56,5 +33,25 @@ if ( !cli.input[0] ) {
 
 }
 
-// Search artist, album and size
-albumArt( cli.input[0], opts ).then( console.log )
+const opts = {
+	album: cli.flags.album || null,
+	size: cli.flags.size || null
+}
+
+// A positional album wins over the flag: `album-art 'The Beatles' 'Abbey Road'`
+if ( cli.input[1] ) {
+
+	opts.album = cli.input[1]
+
+}
+
+try {
+
+	console.log( await albumArt( cli.input[0], opts ) )
+
+} catch ( error ) {
+
+	console.error( error.message )
+	process.exit( 1 )
+
+}

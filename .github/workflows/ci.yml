@@ -17,10 +17,10 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        node: ["18", "20", "22"]
+        node: ["20", "22", "24", "26"]
         include:
           - os: macos-latest
-            node: "20"
+            node: "22"
 
     steps:
       - uses: actions/checkout@v7
@@ -34,9 +34,14 @@ jobs:
 
       # The full test suite calls Spotify's public API and is occasionally
       # flaky depending on what Spotify returns. CI verifies that the module
-      # loads and the CLI bin is exported correctly.
+      # loads and that the CLI actually runs, which needs no network.
       - name: Module loads
         run: node -e "const a = require('./'); if (typeof a !== 'function') process.exit(1)"
 
-      - name: CLI entry is executable
-        run: node -e "require('fs').accessSync('./cli.js')"
+      # Run the real bin. Checking only that the file exists let a crashing
+      # CLI ship (meow is ESM-only, so `require` returned a namespace object).
+      - name: CLI runs
+        run: |
+          BIN=$(node -p "require('./package.json').bin['album-art']")
+          node "$BIN" --help
+          test "$(node "$BIN" --version)" = "$(node -p "require('./package.json').version")"
