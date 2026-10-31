@@ -53,11 +53,26 @@ test( 'cli shows help instead of crashing when no artist is given', async t => {
 
 } )
 
-test( 'cli reads both short and long flags', async t => {
+test( 'cli applies the flags it documents', async t => {
 
-	const {code, stdout, stderr} = await run( ['cher', '-a', 'believe', '--size', 'small'], {timeout: 60000} )
+	const [plain, album, small] = await Promise.all( [
+		run( ['cher'], {timeout: 60000} ),
+		run( ['cher', '-a', 'believe'], {timeout: 60000} ),
+		run( ['cher', '--size', 'small'], {timeout: 60000} )
+	] )
 
-	t.is( code, 0, stderr )
-	t.is( stdout.trim().indexOf( 'http' ), 0, `expected a url, got: ${stdout}${stderr}` )
+	for ( const result of [plain, album, small] ) {
+
+		t.is( result.code, 0, result.stderr )
+
+	}
+
+	t.is( plain.stdout.trim().indexOf( 'http' ), 0, `expected a url, got: ${plain.stdout}` )
+
+	// meow stopped populating `cli.flags.a` when `alias` became `shortFlag`, so
+	// both flags were parsed and then dropped and all three calls returned the
+	// same artist image. Asserting the values differ is what catches that.
+	t.not( plain.stdout.trim(), album.stdout.trim(), '-a changes the result' )
+	t.not( plain.stdout.trim(), small.stdout.trim(), '--size changes the result' )
 
 } )
