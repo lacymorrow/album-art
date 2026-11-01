@@ -1,0 +1,92 @@
+name: Release
+
+# Publishes to npm when a version tag is pushed. There is no NPM_TOKEN in this
+# repo: npm gets its credential from GitHub's OIDC provider at publish time
+# (npm trusted publishing), which is why `permissions.id-token: write` below is
+# load-bearing. Provenance is attached automatically for a public package in a
+# public repo, so no --provenance flag.
+#
+# One-time setup on npmjs.com, per package, under Settings -> Trusted publisher:
+#   Publisher: GitHub Actions
+#   Organization or user: lacymorrow
+#   Repository: album-art
+#   Workflow filename: release.yml   (filename only, must match this file)
+#   Environment: leave empty
+# A new trusted-publisher config expires if it does not publish within 2 days.
+# See LAC-6337.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write # required for OIDC; without it npm publish has no credential
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest # trusted publishing does not work on self-hosted runners
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24" # >= 22.14 is required for OIDC publishing
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+
+      - name: npm is new enough for OIDC
+        run: |
+          need=11.5.1
+          have=$(npm -v)
+          echo "npm $have"
+          if [ "$(printf '%s\n%s\n' "$need" "$have" | sort -V | head -1)" != "$need" ]; then
+            echo "npm $have cannot publish via OIDC; need >= $need" >&2
+            exit 1
+          fi
+
+      # npm install, not npm ci: this repo carries a yarn.lock and no
+      # package-lock.json, so there is nothing for npm ci to read.
+      - run: npm install
+
+      - name: Tag matches package.json version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$pkg" ]; then
+            echo "tag $GITHUB_REF_NAME is $tag but package.json is $pkg" >&2
+            exit 1
+          fi
+
+      # Same smoke as CI, and for the same reason: `npm test` calls Spotify's
+      # public API and is flaky, while this catches a CLI that cannot start
+      # (the #74 class of bug) with no network.
+      - name: Module loads and the bin runs
+        run: |
+          node -e "const a = require('./'); if (typeof a !== 'function') process.exit(1)"
+          BIN=$(node -p "require('./package.json').bin['album-art']")
+          node "$BIN" --help
+          test "$(node "$BIN" --version)" = "$(node -p "require('./package.json').version")"
+
+      # `files` is an allowlist, so a renamed bin can be left out of the
+      # tarball and the package installs with a bin pointing at nothing.
+      - name: Published tarball contains the bin and the main entry
+        run: |
+          node -e '
+            const { execSync } = require("node:child_process");
+            const pkg = require("./package.json");
+            const [meta] = JSON.parse(execSync("npm pack --dry-run --json").toString());
+            const shipped = new Set(meta.files.map((f) => f.path));
+            const want = [pkg.main, ...Object.values(pkg.bin ?? {})];
+            const missing = want.filter((f) => !shipped.has(f));
+            if (missing.length) {
+              console.error("not in the tarball: " + missing.join(", "));
+              process.exit(1);
+            }
+            console.log("tarball ok: " + [...shipped].join(", "));
+          '
+
+      - name: Publish
+        run: npm publish --access public # credential comes from OIDC, not a token
