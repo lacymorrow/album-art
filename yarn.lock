@@ -601,9 +601,9 @@ atomically@^2.0.3:
     when-exit "^2.1.4"
 
 ava@^8.0.0:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/ava/-/ava-8.1.1.tgz#53fea8f2363751977b9c0f6f1fe153718e93bdf0"
-  integrity sha512-qkXhR6mHjNVTbpf7mqwCdBuM8kgbY5xQKjxnOCTsSkJXTFUn1GEMO/QEZwVCxyUcdPOSUDx5GBbtqzHdhItaZA==
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/ava/-/ava-8.2.0.tgz#3f34984d83cbca1056ce258c9933f866c7a37c9a"
+  integrity sha512-9THsZEBUhwvA3e1oVqyJx9o4cBaLSkxScfP0oPlA9I7TDga51UDLMQJRy6bMDqMl3eubFCqxlj12h5IHEsLO7g==
   dependencies:
     "@vercel/nft" "^1.11.0"
     acorn "^8.19.0"
