@@ -12,8 +12,17 @@ name: Release
 #   Repository: album-art
 #   Workflow filename: release.yml   (filename only, must match this file)
 #   Environment: leave empty
-# A new trusted-publisher config expires if it does not publish within 2 days.
-# See LAC-6337.
+#
+# Three things about that config, all from docs.npmjs.com/trusted-publishers:
+#   - npm does not validate it when you save it. Every field is case sensitive
+#     and a mismatch surfaces only as ENEEDAUTH on this job's publish step.
+#   - It cannot be edited. A wrong field means delete it and add a new one.
+#   - A new config must complete its first successful publish within 2 days or
+#     it expires and has to be recreated. So the version bump and tag should go
+#     out right after the config is saved, not a week later.
+#
+# Needs npm >= 11.5.1 and Node >= 22.14.0, and a cloud-hosted runner: OIDC
+# publishing does not work on self-hosted runners. See LAC-6337.
 
 on:
   push:
