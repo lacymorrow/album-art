@@ -1,0 +1,143 @@
+name: Release
+
+# Publishes to npm when a version tag is pushed. There is no NPM_TOKEN in this
+# repo: npm gets its credential from GitHub's OIDC provider at publish time
+# (npm trusted publishing), which is why `id-token: write` on the publish job
+# below is load-bearing. Provenance is attached automatically for a public
+# package in a public repo, so no --provenance flag.
+#
+# Two jobs on purpose. `id-token: write` is job-wide, so any step in a job that
+# holds it can mint an npm credential, not just `npm publish`. So every step
+# that runs third-party code -- `npm install` and the smoke tests that
+# `require()` the dependency tree -- lives in `verify`, which has no id-token.
+# `publish` has the token and runs no third-party JS at all: it checks out,
+# sets up node, compares the tag to package.json, and publishes. It never runs
+# `npm install`, because `npm publish` does not need node_modules.
+#
+# One-time setup on npmjs.com, per package, under Settings -> Trusted publisher:
+#   Publisher: GitHub Actions
+#   Organization or user: lacymorrow
+#   Repository: album-art
+#   Workflow filename: release.yml   (filename only, must match this file)
+#   Environment: see LAC-6337 -- Lacy's call, and it must be decided before the
+#     config is saved. Empty means any push of a `v*` tag publishes with no
+#     human in the loop (what LAC-6337 asked for). A GitHub environment name
+#     here plus `environment:` on the publish job below means one approval
+#     click per release. npm validates this claim, so the two must agree or
+#     the publish step fails with ENEEDAUTH.
+#
+# Three things about that config, all from docs.npmjs.com/trusted-publishers:
+#   - npm does not validate it when you save it. Every field is case sensitive
+#     and a mismatch surfaces only as ENEEDAUTH on this job's publish step.
+#   - It cannot be edited. A wrong field means delete it and add a new one.
+#   - A new config must complete its first successful publish within 2 days or
+#     it expires and has to be recreated. So the version bump and tag should go
+#     out right after the config is saved, not a week later.
+#
+# Needs npm >= 11.5.1 and Node >= 22.14.0, and a cloud-hosted runner: OIDC
+# publishing does not work on self-hosted runners. See LAC-6337.
+#
+# The two actions here are pinned by SHA, unlike ci.yml, because this file can
+# mint a publish credential: a tag pin would let a repointed upstream tag run
+# code next to that credential. Dependabot (github-actions, monthly) keeps the
+# SHAs current.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  # No id-token here. This job runs npm install and executes the dependency
+  # tree, so it must not be able to mint a credential.
+  verify:
+    name: Verify the tarball
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24" # >= 22.14 is required for OIDC publishing
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+
+      # npm install, not npm ci: this repo carries a yarn.lock and no
+      # package-lock.json, so there is nothing for npm ci to read.
+      # --ignore-scripts because nothing here needs a lifecycle script: this
+      # package has none, and ava/eslint/np are not run by the steps below.
+      - run: npm install --ignore-scripts
+
+      # Same smoke as CI, and for the same reason: `npm test` calls Spotify's
+      # public API and is flaky, while this catches a CLI that cannot start
+      # (the #74 class of bug) with no network.
+      - name: Module loads and the bin runs
+        run: |
+          node -e "const a = require('./'); if (typeof a !== 'function') process.exit(1)"
+          BIN=$(node -p "require('./package.json').bin['album-art']")
+          node "$BIN" --help
+          test "$(node "$BIN" --version)" = "$(node -p "require('./package.json').version")"
+
+      # `files` is an allowlist, so a renamed bin can be left out of the
+      # tarball and the package installs with a bin pointing at nothing.
+      - name: Published tarball contains the bin and the main entry
+        run: |
+          node -e '
+            const { execSync } = require("node:child_process");
+            const pkg = require("./package.json");
+            const [meta] = JSON.parse(execSync("npm pack --dry-run --json").toString());
+            const shipped = new Set(meta.files.map((f) => f.path));
+            const want = [pkg.main, ...Object.values(pkg.bin ?? {})];
+            const missing = want.filter((f) => !shipped.has(f));
+            if (missing.length) {
+              console.error("not in the tarball: " + missing.join(", "));
+              process.exit(1);
+            }
+            console.log("tarball ok: " + [...shipped].join(", "));
+          '
+
+  # Holds id-token. Runs no third-party JS: no npm install, and every step is
+  # either a SHA-pinned GitHub action, node reading package.json, or npm itself.
+  publish:
+    name: Publish to npm
+    needs: verify
+    runs-on: ubuntu-latest # trusted publishing does not work on self-hosted runners
+    permissions:
+      contents: read
+      id-token: write # required for OIDC; without it npm publish has no credential
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24" # >= 22.14 is required for OIDC publishing
+          registry-url: "https://registry.npmjs.org"
+
+      - name: npm is new enough for OIDC
+        run: |
+          need=11.5.1
+          have=$(npm -v)
+          echo "npm $have"
+          if [ "$(printf '%s\n%s\n' "$need" "$have" | sort -V | head -1)" != "$need" ]; then
+            echo "npm $have cannot publish via OIDC; need >= $need" >&2
+            exit 1
+          fi
+
+      - name: Tag matches package.json version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$pkg" ]; then
+            echo "tag $GITHUB_REF_NAME is $tag but package.json is $pkg" >&2
+            exit 1
+          fi
+
+      # No npm install above on purpose: npm publish does not need
+      # node_modules, and not installing is what keeps third-party code away
+      # from the OIDC credential this job can mint.
+      - name: Publish
+        run: npm publish --access public # credential comes from OIDC, not a token
